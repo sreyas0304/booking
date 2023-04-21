@@ -1,0 +1,75 @@
+const express = require("express");
+const cors = require("cors");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const dotenv = require("dotenv");
+const User = require("./models/ShowBookings");
+dotenv.config()
+
+const paymentRoute = require("./routes/payment")
+const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
+const configureRoutes = require("./routes")
+// app.use("/payment", paymentRoute)
+
+
+configureRoutes(app);
+
+// DB Config
+const db = require("./config/keys").mongoURI;
+
+//console.log("Hello, " + db );
+// Connect to MongoDB
+mongoose
+  .connect(
+    db,
+    { useNewUrlParser: true }
+  )
+  .then(() => console.log("MongoDB successfully connected"))
+  .catch(err => console.log(err));
+
+app.listen(8000, error => {
+  if (error) throw error;
+  console.log("Server running on port " + 8000);
+});
+
+
+// const express = require("express");
+// const mongoose = require("mongoose");
+// const cors = require("cors");
+// const bodyParser = require("body-parser");
+// const dotenv = require("dotenv");
+// const User = require("./models/ShowBookings");
+// dotenv.config()
+
+
+
+// const app = express();
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(cors());
+// const configureRoutes = require("./routes")
+
+
+
+// configureRoutes(app);
+
+// // // DB Config
+// // const db = require("./config/keys").mongoURI;
+
+// // //console.log("Hello, " + db );
+// // // Connect to MongoDB
+// // mongoose
+// //   .connect(
+// //     db,
+// //     { useNewUrlParser: true }
+// //   )
+// //   .then(() => console.log("MongoDB successfully connected"))
+// //   .catch(err => console.log(err));
+
+// app.listen(5000, error => {
+//   if (error) throw error;
+//   console.log("Server running on port " + 5000);
+// });
