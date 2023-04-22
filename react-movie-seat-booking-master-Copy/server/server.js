@@ -3,7 +3,8 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
-const User = require("./models/ShowBookings");
+const ShowBookings = require("./models/ShowBookings");
+
 dotenv.config()
 
 const paymentRoute = require("./routes/payment")
@@ -35,6 +36,19 @@ app.listen(8000, error => {
   console.log("Server running on port " + 8000);
 });
 
+app.get('/movies', async (req, res) => {
+  try {
+    const movies = await Movie.find();
+    res.json(movies);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server error');
+  }
+});
+
+
+// const port = process.env.PORT || 3000; // 5000 process.env.port is Heroku's port if you choose to deploy the app there
+// app.listen(port, () => console.log(`Server up and running port ${port} !`));
 
 // const express = require("express");
 // const mongoose = require("mongoose");

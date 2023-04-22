@@ -9,7 +9,9 @@ const ShowBookingsSchema = new Schema({
   booking_show: String,
   booking_seats: [ String ],
   booking_status: String,
-  booking_time: Date
+  booking_time: Date,
+  booking_amount: String,
+  booking_email: String
 });
 
 const ShowBookings = mongoose.model("ShowBookings", ShowBookingsSchema);

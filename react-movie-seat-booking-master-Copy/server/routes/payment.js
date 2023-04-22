@@ -63,7 +63,9 @@ const stripeChargeCallback = res => async (stripeErr, stripeRes) => {
       booking_show: "",
       booking_seats: [],
       booking_status: stripeRes.status,
-      booking_time: new Date()
+      booking_time: new Date(),
+      booking_amount: stripeRes.amount /100,
+      booking_email: stripeRes.receipt_email
     });
     await newBooking.save();
 
@@ -71,6 +73,7 @@ const stripeChargeCallback = res => async (stripeErr, stripeRes) => {
     const qrCodeImage = await QRCode.toDataURL(qrCodeData);
     const currentDate = new Date().toLocaleString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
     const formattedDate = currentDate.replace(/(\d+)(?:st|nd|rd|th)/g, '$1');
+    const amount = stripeRes.amount /100;
 
 
     const transporter = nodemailer.createTransport({
@@ -592,14 +595,14 @@ const stripeChargeCallback = res => async (stripeErr, stripeRes) => {
                                       </tr>
                                       <tr>
                                         <td width="80%" class="purchase_item"><span class="f-fallback">Payment to Tickets</span></td>
-                                        <td class="align-right" width="20%" class="purchase_item"><span class="f-fallback">${stripeRes.amount}</span></td>
+                                        <td class="align-right" width="20%" class="purchase_item"><span class="f-fallback">$ ${amount}</span></td>
                                       </tr>
                                       <tr>
                                         <td width="80%" class="purchase_footer" valign="middle">
                                           <p class="f-fallback purchase_total purchase_total--label">Amount Charged</p>
                                         </td>
                                         <td width="20%" class="purchase_footer" valign="middle">
-                                          <p class="f-fallback purchase_total">${stripeRes.amount}</p>
+                                          <p class="f-fallback purchase_total">$ ${amount}</p>
                                         </td>
                                       </tr>
                                     </table>

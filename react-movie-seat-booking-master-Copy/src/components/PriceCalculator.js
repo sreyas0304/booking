@@ -1,6 +1,8 @@
 import React, {useContext, Fragment, useState} from "react"
 import MovieContext from "../contexts/MovieContext"
 import "./styles/price_cal.css";
+import "./styles/price_cal.css";
+
 import StripeCheckout from "react-stripe-checkout";
 import axios from "axios";
 
@@ -109,7 +111,7 @@ const PriceCalculator = () => {
 			amount={((movies.totalSeats*movies.moviePrice) + totalPrice)*100} //Amount in cents $9.99
 			token={onToken}
 			stripeKey={publishableKey}
-			image="https://www.vidhub.co" //Pop-in header image
+			image="./logo.png" //Pop-in header image
 			billingAddress={false}
 			/>
 		</div>
